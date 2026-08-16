@@ -20,12 +20,7 @@ data class G2Continuity(
     val capsuleProfile: G2ContinuityProfile = G2ContinuityProfile.Capsule
 ) : AdvancedContinuity() {
 
-    private fun resolveBezier(profile: G2ContinuityProfile) =
-        when (profile) {
-            this.profile -> this.profile.bezier
-            this.capsuleProfile -> this.capsuleProfile.bezier
-            else -> profile.bezier
-        }
+    private fun resolveBezier(profile: G2ContinuityProfile) = profile.bezier
 
     override fun createStandardRoundedRectanglePathSegments(
         width: Double,
