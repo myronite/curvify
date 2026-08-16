@@ -38,24 +38,33 @@ open class ContinuousRoundedRectangle(
         bottomEnd: Float,
         bottomStart: Float,
         layoutDirection: LayoutDirection
+    ): Outline = createClampedOutline(
+        size = size,
+        topLeft = if (layoutDirection == Ltr) topStart else topEnd,
+        topRight = if (layoutDirection == Ltr) topEnd else topStart,
+        bottomRight = if (layoutDirection == Ltr) bottomEnd else bottomStart,
+        bottomLeft = if (layoutDirection == Ltr) bottomStart else bottomEnd
+    )
+
+    protected fun createClampedOutline(
+        size: Size,
+        topLeft: Float,
+        topRight: Float,
+        bottomRight: Float,
+        bottomLeft: Float
     ): Outline {
         // rectangle
-        if (topStart + topEnd + bottomEnd + bottomStart == 0f) {
+        if (topLeft + topRight + bottomRight + bottomLeft == 0f) {
             return Outline.Rectangle(size.toRect())
         }
 
         val maxRadius = min(size.width, size.height) * 0.5f
-        val topLeft = (if (layoutDirection == Ltr) topStart else topEnd).fastCoerceIn(0f, maxRadius)
-        val topRight = (if (layoutDirection == Ltr) topEnd else topStart).fastCoerceIn(0f, maxRadius)
-        val bottomRight = (if (layoutDirection == Ltr) bottomEnd else bottomStart).fastCoerceIn(0f, maxRadius)
-        val bottomLeft = (if (layoutDirection == Ltr) bottomStart else bottomEnd).fastCoerceIn(0f, maxRadius)
-
         return continuity.createRoundedRectangleOutline(
             size = size,
-            topLeft = topLeft,
-            topRight = topRight,
-            bottomRight = bottomRight,
-            bottomLeft = bottomLeft
+            topLeft = topLeft.fastCoerceIn(0f, maxRadius),
+            topRight = topRight.fastCoerceIn(0f, maxRadius),
+            bottomRight = bottomRight.fastCoerceIn(0f, maxRadius),
+            bottomLeft = bottomLeft.fastCoerceIn(0f, maxRadius)
         )
     }
 
@@ -93,6 +102,8 @@ open class ContinuousRoundedRectangle(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is ContinuousRoundedRectangle) return false
+        // Directional and absolute variants render differently under RTL, keep them unequal.
+        if (other is AbsoluteContinuousRoundedRectangle && this !is AbsoluteContinuousRoundedRectangle) return false
 
         if (topStart != other.topStart) return false
         if (topEnd != other.topEnd) return false
@@ -142,7 +153,7 @@ private data class ContinuousRectangleImpl(
     }
 }
 
-private val FullCornerSize = CornerSize(50)
+internal val FullCornerSize = CornerSize(50)
 
 @Stable
 val ContinuousCapsule: ContinuousRoundedRectangle = ContinuousCapsule()

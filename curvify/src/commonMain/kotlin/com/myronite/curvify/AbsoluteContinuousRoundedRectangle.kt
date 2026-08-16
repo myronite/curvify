@@ -2,32 +2,33 @@ package com.myronite.curvify
 
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
-import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.util.fastCoerceIn
-import kotlin.math.min
 
+/**
+ * A [ContinuousRoundedRectangle] that ignores [LayoutDirection]: corners are always resolved
+ * from the top-left in absolute coordinates instead of from the layout start.
+ */
 @Immutable
 open class AbsoluteContinuousRoundedRectangle(
     topLeft: CornerSize,
     topRight: CornerSize,
     bottomRight: CornerSize,
     bottomLeft: CornerSize,
-    open val continuity: Continuity = Continuity.Default
-) : CornerBasedShape(
+    continuity: Continuity = Continuity.Default
+) : ContinuousRoundedRectangle(
     topStart = topLeft,
     topEnd = topRight,
     bottomEnd = bottomRight,
-    bottomStart = bottomLeft
+    bottomStart = bottomLeft,
+    continuity = continuity
 ) {
 
     override fun createOutline(
@@ -37,26 +38,13 @@ open class AbsoluteContinuousRoundedRectangle(
         bottomEnd: Float,
         bottomStart: Float,
         layoutDirection: LayoutDirection
-    ): Outline {
-        // rectangle
-        if (topStart + topEnd + bottomEnd + bottomStart == 0f) {
-            return Outline.Rectangle(size.toRect())
-        }
-
-        val maxRadius = min(size.width, size.height) * 0.5f
-        val topLeft = topStart.fastCoerceIn(0f, maxRadius)
-        val topRight = topEnd.fastCoerceIn(0f, maxRadius)
-        val bottomRight = bottomEnd.fastCoerceIn(0f, maxRadius)
-        val bottomLeft = bottomStart.fastCoerceIn(0f, maxRadius)
-
-        return continuity.createRoundedRectangleOutline(
-            size = size,
-            topLeft = topLeft,
-            topRight = topRight,
-            bottomRight = bottomRight,
-            bottomLeft = bottomLeft
-        )
-    }
+    ): Outline = createClampedOutline(
+        size = size,
+        topLeft = topStart,
+        topRight = topEnd,
+        bottomRight = bottomEnd,
+        bottomLeft = bottomStart
+    )
 
     override fun copy(
         topStart: CornerSize,
@@ -89,28 +77,6 @@ open class AbsoluteContinuousRoundedRectangle(
         )
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is AbsoluteContinuousRoundedRectangle) return false
-
-        if (topStart != other.topStart) return false
-        if (topEnd != other.topEnd) return false
-        if (bottomEnd != other.bottomEnd) return false
-        if (bottomStart != other.bottomStart) return false
-        if (continuity != other.continuity) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = topStart.hashCode()
-        result = 31 * result + topEnd.hashCode()
-        result = 31 * result + bottomEnd.hashCode()
-        result = 31 * result + bottomStart.hashCode()
-        result = 31 * result + continuity.hashCode()
-        return result
-    }
-
     override fun toString(): String {
         return "AbsoluteContinuousRoundedRectangle(topLeft=$topStart, topRight=$topEnd, bottomRight=$bottomEnd, " +
                 "bottomLeft=$bottomStart, continuity=$continuity)"
@@ -140,8 +106,6 @@ private data class AbsoluteContinuousRectangleImpl(
         return "AbsoluteContinuousRectangle(continuity=$continuity)"
     }
 }
-
-private val FullCornerSize = CornerSize(50)
 
 @Stable
 val AbsoluteContinuousCapsule: AbsoluteContinuousRoundedRectangle = AbsoluteContinuousCapsule()
