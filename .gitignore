@@ -17,3 +17,6 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 PRIVATE_README.md
+
+# Publish script (contains credential parameterization, keep local only)
+scripts/publish-central.ps1
