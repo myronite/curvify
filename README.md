@@ -6,6 +6,11 @@ Based on the original project: [Capsule](https://github.com/Kyant0/Capsule)
 
 Original author: [Kyant0](https://github.com/kyant0)
 
+Curvify is a derivative work of Capsule, ported and modified under the
+[Apache License 2.0](LICENSE). Modifications include the package and project
+renaming, absolute-direction corner variants, Bézier evaluation caching,
+lazy SVG bounds, KDoc coverage and the new sample app.
+
 Curvify is a Compose Multiplatform library that creates G2 continuous rounded rectangles.
 
 ## Installation
