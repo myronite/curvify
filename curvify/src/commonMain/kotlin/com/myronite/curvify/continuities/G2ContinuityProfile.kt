@@ -11,6 +11,15 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
+/**
+ * Tuning parameters of a [G2Continuity] corner transition.
+ *
+ * @property extendedFraction transition length between the corner and the straight edge,
+ * relative to the corner radius.
+ * @property arcFraction ratio of the arc within the 90 degree corner.
+ * @property bezierCurvatureScale multiplier of the Bezier end curvature.
+ * @property arcCurvatureScale multiplier of the arc curvature.
+ */
 @Immutable
 public data class G2ContinuityProfile(
     @param:FloatRange(from = 0.0) public val extendedFraction: Double,
@@ -53,6 +62,7 @@ public data class G2ContinuityProfile(
 
     public companion object {
 
+        /** The default profile for standard rounded rectangles. */
         public val RoundedRectangle: G2ContinuityProfile =
             G2ContinuityProfile(
                 extendedFraction = 0.5286651,
@@ -61,6 +71,7 @@ public data class G2ContinuityProfile(
                 arcCurvatureScale = 1.0732051
             )
 
+        /** The default profile for capsule shapes. */
         public val Capsule: G2ContinuityProfile =
             G2ContinuityProfile(
                 extendedFraction = 0.5286651 * 0.75,
@@ -69,6 +80,7 @@ public data class G2ContinuityProfile(
                 arcCurvatureScale = 1.0
             )
 
+        /** A profile visually equivalent to a [G1Continuity] corner. */
         public val G1Equivalent: G2ContinuityProfile =
             G2ContinuityProfile(
                 extendedFraction = 0.0,
@@ -79,6 +91,7 @@ public data class G2ContinuityProfile(
     }
 }
 
+/** Linearly interpolates between the [start] and [stop] profiles. */
 public fun lerp(start: G2ContinuityProfile, stop: G2ContinuityProfile, fraction: Double): G2ContinuityProfile {
     return G2ContinuityProfile(
         extendedFraction = lerp(start.extendedFraction, stop.extendedFraction, fraction),

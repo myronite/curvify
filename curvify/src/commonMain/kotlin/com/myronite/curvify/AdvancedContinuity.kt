@@ -10,9 +10,14 @@ import com.myronite.curvify.path.PathSegments
 import com.myronite.curvify.path.buildCirclePathSegments
 import com.myronite.curvify.path.toPath
 
+/**
+ * A [Continuity] that dispatches capsule shapes to dedicated geometry instead of treating them
+ * as regular rounded rectangles.
+ */
 @Immutable
 public abstract class AdvancedContinuity : Continuity {
 
+    /** Creates the path segments of a standard (non-capsule) rounded rectangle. */
     protected abstract fun createStandardRoundedRectanglePathSegments(
         width: Double,
         height: Double,
@@ -22,6 +27,7 @@ public abstract class AdvancedContinuity : Continuity {
         bottomLeft: Double
     ): PathSegments
 
+    /** Creates the [Outline] of a standard (non-capsule) rounded rectangle. */
     protected open fun createStandardRoundedRectangleOutline(
         size: Size,
         topLeft: Float,
@@ -41,6 +47,7 @@ public abstract class AdvancedContinuity : Continuity {
         return Outline.Generic(path)
     }
 
+    /** Creates the path segments of a horizontal capsule (width greater than height). */
     protected open fun createHorizontalCapsulePathSegments(width: Double, height: Double): PathSegments {
         val cornerRadius = width * 0.5
         return createStandardRoundedRectanglePathSegments(
@@ -53,6 +60,7 @@ public abstract class AdvancedContinuity : Continuity {
         )
     }
 
+    /** Creates the [Outline] of a horizontal capsule (width greater than height). */
     protected open fun createHorizontalCapsuleOutline(size: Size): Outline {
         val path =
             createHorizontalCapsulePathSegments(
@@ -62,6 +70,7 @@ public abstract class AdvancedContinuity : Continuity {
         return Outline.Generic(path)
     }
 
+    /** Creates the path segments of a vertical capsule (height greater than width). */
     protected open fun createVerticalCapsulePathSegments(width: Double, height: Double): PathSegments {
         val cornerRadius = height * 0.5
         return createStandardRoundedRectanglePathSegments(
@@ -74,6 +83,7 @@ public abstract class AdvancedContinuity : Continuity {
         )
     }
 
+    /** Creates the [Outline] of a vertical capsule (height greater than width). */
     protected open fun createVerticalCapsuleOutline(size: Size): Outline {
         val path =
             createVerticalCapsulePathSegments(
@@ -83,6 +93,7 @@ public abstract class AdvancedContinuity : Continuity {
         return Outline.Generic(path)
     }
 
+    /** Creates the path segments of a circle with the given side length. */
     protected open fun createCirclePathSegments(size: Double): PathSegments {
         val radius = size * 0.5
         return buildCirclePathSegments(
@@ -91,6 +102,7 @@ public abstract class AdvancedContinuity : Continuity {
         )
     }
 
+    /** Creates the [Outline] of a circle with the given side length. */
     protected open fun createCircleOutline(size: Float): Outline {
         val radius = size * 0.5f
         return Outline.Rounded(
@@ -150,6 +162,7 @@ public abstract class AdvancedContinuity : Continuity {
         )
     }
 
+    /** Creates the path segments of a capsule with the given width and height. */
     public fun createCapsulePathSegments(width: Double, height: Double): PathSegments =
         when {
             width > height -> createHorizontalCapsulePathSegments(width, height)

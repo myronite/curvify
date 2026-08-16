@@ -8,9 +8,13 @@ import com.myronite.curvify.continuities.G2Continuity
 import com.myronite.curvify.path.PathSegments
 import com.myronite.curvify.path.toPath
 
+/**
+ * Defines how the outline of a rounded rectangle is generated, i.e. the smoothness of its corners.
+ */
 @Immutable
 public interface Continuity {
 
+    /** Creates the path segments of a rounded rectangle with the given corner radii. */
     public fun createRoundedRectanglePathSegments(
         width: Double,
         height: Double,
@@ -20,6 +24,7 @@ public interface Continuity {
         bottomLeft: Double
     ): PathSegments
 
+    /** Creates the [Outline] of a rounded rectangle with the given corner radii. */
     public fun createRoundedRectangleOutline(
         size: Size,
         topLeft: Float,
@@ -39,6 +44,7 @@ public interface Continuity {
         return Outline.Generic(path)
     }
 
+    /** Creates the [Outline] of a capsule that fills [size]. */
     public fun createCapsuleOutline(size: Size): Outline {
         val radius = size.minDimension * 0.5f
         return createRoundedRectangleOutline(
@@ -50,10 +56,12 @@ public interface Continuity {
         )
     }
 
+    /** Linearly interpolates from this continuity towards [stop] by [fraction]. */
     public fun lerp(stop: Continuity, fraction: Double): Continuity
 
     public companion object {
 
+        /** The default continuity: a [G2Continuity] with the default profiles. */
         @Stable
         public val Default: Continuity = G2Continuity()
     }

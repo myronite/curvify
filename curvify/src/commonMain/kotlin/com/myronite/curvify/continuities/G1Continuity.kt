@@ -12,6 +12,7 @@ import com.myronite.curvify.path.PathSegments
 import com.myronite.curvify.path.buildPathSegments
 import kotlin.math.PI
 
+/** Corner continuity with tangent continuity: plain circular corners, like [androidx.compose.foundation.shape.RoundedCornerShape]. */
 @Immutable
 public data object G1Continuity : Continuity {
 

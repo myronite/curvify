@@ -8,21 +8,25 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.util.fastCoerceAtLeast
 
+/** Returns a shape inset by [padding] whose corner curves stay concentric with this shape. */
 @Stable
 public fun ContinuousRoundedRectangle.concentricInset(padding: Dp): ContinuousRoundedRectangle {
     return ConcentricContinuousRoundedRectangle(this, padding)
 }
 
+/** Returns a shape outset by [padding] whose corner curves stay concentric with this shape. */
 @Stable
 public fun ContinuousRoundedRectangle.concentricOutset(padding: Dp): ContinuousRoundedRectangle {
     return ConcentricContinuousRoundedRectangle(this, -padding)
 }
 
+/** Returns a shape inset by [padding] whose corner curves stay concentric with this shape. */
 @Stable
 public fun AbsoluteContinuousRoundedRectangle.concentricInset(padding: Dp): AbsoluteContinuousRoundedRectangle {
     return ConcentricAbsoluteContinuousRoundedRectangle(this, padding)
 }
 
+/** Returns a shape outset by [padding] whose corner curves stay concentric with this shape. */
 @Stable
 public fun AbsoluteContinuousRoundedRectangle.concentricOutset(padding: Dp): AbsoluteContinuousRoundedRectangle {
     return ConcentricAbsoluteContinuousRoundedRectangle(this, -padding)

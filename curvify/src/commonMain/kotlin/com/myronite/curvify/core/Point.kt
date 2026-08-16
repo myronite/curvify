@@ -5,6 +5,7 @@ import androidx.compose.runtime.Stable
 import com.myronite.curvify.lerp
 import kotlin.math.sqrt
 
+/** An immutable 2D point with vector operations. */
 @Immutable
 public data class Point(
     public val x: Double,
@@ -44,11 +45,13 @@ public data class Point(
 
     public companion object {
 
+        /** The point at the origin. */
         @Stable
         public val Zero: Point = Point(0.0, 0.0)
     }
 }
 
+/** Linearly interpolates between the [start] and [stop] points. */
 @Stable
 public fun lerp(start: Point, stop: Point, fraction: Double): Point {
     return Point(

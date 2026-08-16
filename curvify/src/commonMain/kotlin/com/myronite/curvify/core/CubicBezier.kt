@@ -3,6 +3,7 @@ package com.myronite.curvify.core
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 
+/** A cubic Bezier curve defined by four control points. */
 @Immutable
 public data class CubicBezier(
     public val p0: Point,

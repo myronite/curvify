@@ -17,6 +17,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastCoerceIn
 import kotlin.math.min
 
+/**
+ * A [CornerBasedShape] whose corner smoothness is defined by [continuity].
+ *
+ * Corners are resolved relative to the layout start and mirrored in RTL layouts; use
+ * [AbsoluteContinuousRoundedRectangle] for corners that are always absolute.
+ */
 @Immutable
 public open class ContinuousRoundedRectangle(
     topStart: CornerSize,
@@ -46,6 +52,7 @@ public open class ContinuousRoundedRectangle(
         bottomLeft = if (layoutDirection == Ltr) bottomStart else bottomEnd
     )
 
+    /** Creates the outline with all corner radii clamped to the shape bounds. */
     protected fun createClampedOutline(
         size: Size,
         topLeft: Float,
@@ -83,6 +90,7 @@ public open class ContinuousRoundedRectangle(
         )
     }
 
+    /** Returns a copy of this shape with the given properties replaced. */
     public fun copy(
         topStart: CornerSize = this.topStart,
         topEnd: CornerSize = this.topEnd,
@@ -129,9 +137,11 @@ public open class ContinuousRoundedRectangle(
     }
 }
 
+/** A rectangle shape with continuous corners (zero radius). */
 @Stable
 public val ContinuousRectangle: ContinuousRoundedRectangle = ContinuousRectangleImpl()
 
+/** Creates a rectangle shape with continuous corners (zero radius). */
 @Suppress("FunctionName")
 @Stable
 public fun ContinuousRectangle(continuity: Continuity = Continuity.Default): ContinuousRoundedRectangle =
@@ -155,9 +165,11 @@ private data class ContinuousRectangleImpl(
 
 internal val FullCornerSize = CornerSize(50)
 
+/** A capsule shape with continuous corners. */
 @Stable
 public val ContinuousCapsule: ContinuousRoundedRectangle = ContinuousCapsule()
 
+/** Creates a capsule shape with continuous corners. */
 @Suppress("FunctionName")
 @Stable
 public fun ContinuousCapsule(continuity: Continuity = Continuity.Default): ContinuousRoundedRectangle =
@@ -188,6 +200,7 @@ private data class ContinuousCapsuleImpl(
     }
 }
 
+/** Creates a shape with the same [corner] on all four corners. */
 @Stable
 public fun ContinuousRoundedRectangle(
     corner: CornerSize,
@@ -201,6 +214,7 @@ public fun ContinuousRoundedRectangle(
         continuity = continuity
     )
 
+/** Creates a shape with the same corner of [size] on all four corners. */
 @Stable
 public fun ContinuousRoundedRectangle(
     size: Dp,
@@ -211,6 +225,7 @@ public fun ContinuousRoundedRectangle(
         continuity = continuity
     )
 
+/** Creates a shape with the same corner of [size] pixels on all four corners. */
 @Stable
 public fun ContinuousRoundedRectangle(
     @FloatRange(from = 0.0) size: Float,
@@ -221,6 +236,7 @@ public fun ContinuousRoundedRectangle(
         continuity = continuity
     )
 
+/** Creates a shape with the same corner of [percent] on all four corners. */
 @Stable
 public fun ContinuousRoundedRectangle(
     @IntRange(from = 0, to = 100) percent: Int,
@@ -231,6 +247,7 @@ public fun ContinuousRoundedRectangle(
         continuity = continuity
     )
 
+/** Creates a shape with individual corners given in [Dp]. */
 @Stable
 public fun ContinuousRoundedRectangle(
     topStart: Dp = 0f.dp,
@@ -247,6 +264,7 @@ public fun ContinuousRoundedRectangle(
         continuity = continuity
     )
 
+/** Creates a shape with individual corners given in pixels. */
 @Stable
 public fun ContinuousRoundedRectangle(
     @FloatRange(from = 0.0) topStart: Float = 0f,
@@ -263,6 +281,7 @@ public fun ContinuousRoundedRectangle(
         continuity = continuity
     )
 
+/** Creates a shape with individual corners given in percents. */
 @Stable
 public fun ContinuousRoundedRectangle(
     @IntRange(from = 0, to = 100) topStartPercent: Int = 0,

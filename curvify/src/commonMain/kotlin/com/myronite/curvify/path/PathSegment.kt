@@ -8,14 +8,20 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
+/** A single segment of a shape path. */
 @Immutable
 public sealed interface PathSegment {
 
+    /** The start point of the segment. */
     public val from: Point
+
+    /** The end point of the segment. */
     public val to: Point
 
+    /** Appends this segment to [path]. */
     public fun drawTo(path: Path)
 
+    /** A straight line from [from] to [to]. */
     public data class Line(
         override val from: Point,
         override val to: Point
@@ -26,6 +32,7 @@ public sealed interface PathSegment {
         }
     }
 
+    /** A circular arc around [center]. */
     public data class Arc(
         public val center: Point,
         public val radius: Double,
@@ -60,6 +67,7 @@ public sealed interface PathSegment {
         }
     }
 
+    /** A full circle around [center]. */
     public data class Circle(
         public val center: Point,
         public val radius: Double
@@ -83,6 +91,7 @@ public sealed interface PathSegment {
         }
     }
 
+    /** A cubic Bezier curve from [p0] to [p3], controlled by [p1] and [p2]. */
     public data class Cubic(
         public val p0: Point,
         public val p1: Point,

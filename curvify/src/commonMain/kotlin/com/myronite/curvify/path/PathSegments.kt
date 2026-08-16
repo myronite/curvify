@@ -4,8 +4,10 @@ import androidx.compose.ui.graphics.Path
 import kotlin.math.PI
 import kotlin.math.abs
 
+/** An ordered list of [PathSegment]s describing a shape. */
 public typealias PathSegments = List<PathSegment>
 
+/** Converts the segments to a Compose [Path]. */
 public fun PathSegments.toPath(): Path {
     return Path().apply {
         if (isEmpty()) return@apply
@@ -15,6 +17,11 @@ public fun PathSegments.toPath(): Path {
     }
 }
 
+/**
+ * Converts the segments to an SVG path string.
+ *
+ * @param asDocument if true, wraps the path in a complete SVG document with a fitting viewBox.
+ */
 public fun PathSegments.toSvg(asDocument: Boolean = false): String = buildString {
     if (asDocument) {
         val bounds = this@toSvg.toPath().getBounds()

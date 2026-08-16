@@ -15,6 +15,13 @@ import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
 
+/**
+ * Corner continuity with curvature continuity: corners transition smoothly into the edges
+ * without a curvature jump.
+ *
+ * @property profile the profile used for standard rounded rectangles.
+ * @property capsuleProfile the profile used when the shape degenerates into a capsule.
+ */
 @Immutable
 public data class G2Continuity(
     public val profile: G2ContinuityProfile = G2ContinuityProfile.RoundedRectangle,

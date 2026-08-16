@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.compose.ui.util.lerp
 
+/** Linearly interpolates between the [start] and [stop] shapes. */
 @Stable
 public fun lerp(
     start: ContinuousRoundedRectangle,
@@ -17,6 +18,7 @@ public fun lerp(
     return LerpContinuousRoundedRectangle(start, stop, fraction)
 }
 
+/** Linearly interpolates between the [start] and [stop] shapes. */
 @Stable
 public fun lerp(
     start: AbsoluteContinuousRoundedRectangle,

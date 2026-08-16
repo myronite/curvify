@@ -5,6 +5,7 @@ import com.myronite.curvify.Continuity
 import com.myronite.curvify.path.PathSegments
 import com.myronite.curvify.path.buildPathSegments
 
+/** Corner continuity with sharp corners: straight lines only, no rounding. */
 @Immutable
 public data object G0Continuity : Continuity {
 

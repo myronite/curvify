@@ -61,6 +61,7 @@ public open class AbsoluteContinuousRoundedRectangle(
         )
     }
 
+    /** Returns a copy of this shape with the given properties replaced. */
     public fun copy(
         topLeft: CornerSize = this.topStart,
         topRight: CornerSize = this.topEnd,
@@ -83,9 +84,11 @@ public open class AbsoluteContinuousRoundedRectangle(
     }
 }
 
+/** A rectangle shape with continuous corners (zero radius), unaffected by layout direction. */
 @Stable
 public val AbsoluteContinuousRectangle: AbsoluteContinuousRoundedRectangle = AbsoluteContinuousRectangleImpl()
 
+/** Creates a rectangle shape with continuous corners (zero radius), unaffected by layout direction. */
 @Suppress("FunctionName")
 @Stable
 public fun AbsoluteContinuousRectangle(continuity: Continuity = Continuity.Default): AbsoluteContinuousRoundedRectangle =
@@ -107,9 +110,11 @@ private data class AbsoluteContinuousRectangleImpl(
     }
 }
 
+/** A capsule shape with continuous corners, unaffected by layout direction. */
 @Stable
 public val AbsoluteContinuousCapsule: AbsoluteContinuousRoundedRectangle = AbsoluteContinuousCapsule()
 
+/** Creates a capsule shape with continuous corners, unaffected by layout direction. */
 @Suppress("FunctionName")
 @Stable
 public fun AbsoluteContinuousCapsule(continuity: Continuity = Continuity.Default): AbsoluteContinuousRoundedRectangle =
@@ -140,6 +145,7 @@ private data class AbsoluteContinuousCapsuleImpl(
     }
 }
 
+/** Creates a shape with the same [corner] on all four corners. */
 @Stable
 public fun AbsoluteContinuousRoundedRectangle(
     corner: CornerSize,
@@ -153,6 +159,7 @@ public fun AbsoluteContinuousRoundedRectangle(
         continuity = continuity
     )
 
+/** Creates a shape with the same corner of [size] on all four corners. */
 @Stable
 public fun AbsoluteContinuousRoundedRectangle(
     size: Dp,
@@ -163,6 +170,7 @@ public fun AbsoluteContinuousRoundedRectangle(
         continuity = continuity
     )
 
+/** Creates a shape with the same corner of [size] pixels on all four corners. */
 @Stable
 public fun AbsoluteContinuousRoundedRectangle(
     @FloatRange(from = 0.0) size: Float,
@@ -173,6 +181,7 @@ public fun AbsoluteContinuousRoundedRectangle(
         continuity = continuity
     )
 
+/** Creates a shape with the same corner of [percent] on all four corners. */
 @Stable
 public fun AbsoluteContinuousRoundedRectangle(
     @IntRange(from = 0, to = 100) percent: Int,
@@ -183,6 +192,7 @@ public fun AbsoluteContinuousRoundedRectangle(
         continuity = continuity
     )
 
+/** Creates a shape with individual corners given in [Dp]. */
 @Stable
 public fun AbsoluteContinuousRoundedRectangle(
     topLeft: Dp = 0f.dp,
@@ -199,6 +209,7 @@ public fun AbsoluteContinuousRoundedRectangle(
         continuity = continuity
     )
 
+/** Creates a shape with individual corners given in pixels. */
 @Stable
 public fun AbsoluteContinuousRoundedRectangle(
     @FloatRange(from = 0.0) topLeft: Float = 0f,
@@ -215,6 +226,7 @@ public fun AbsoluteContinuousRoundedRectangle(
         continuity = continuity
     )
 
+/** Creates a shape with individual corners given in percents. */
 @Stable
 public fun AbsoluteContinuousRoundedRectangle(
     @IntRange(from = 0, to = 100) topLeftPercent: Int = 0,
