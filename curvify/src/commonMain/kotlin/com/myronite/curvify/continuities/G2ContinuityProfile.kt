@@ -12,11 +12,11 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 @Immutable
-data class G2ContinuityProfile(
-    @param:FloatRange(from = 0.0) val extendedFraction: Double,
-    @param:FloatRange(from = 0.0, to = 1.0) val arcFraction: Double,
-    @param:FloatRange(from = 0.0) val bezierCurvatureScale: Double,
-    @param:FloatRange(from = 0.0, fromInclusive = false) val arcCurvatureScale: Double
+public data class G2ContinuityProfile(
+    @param:FloatRange(from = 0.0) public val extendedFraction: Double,
+    @param:FloatRange(from = 0.0, to = 1.0) public val arcFraction: Double,
+    @param:FloatRange(from = 0.0) public val bezierCurvatureScale: Double,
+    @param:FloatRange(from = 0.0, fromInclusive = false) public val arcCurvatureScale: Double
 ) {
 
     private var _bezier: CubicBezier? = null
@@ -51,9 +51,9 @@ data class G2ContinuityProfile(
         }
     }
 
-    companion object {
+    public companion object {
 
-        val RoundedRectangle: G2ContinuityProfile =
+        public val RoundedRectangle: G2ContinuityProfile =
             G2ContinuityProfile(
                 extendedFraction = 0.5286651,
                 arcFraction = 5.0 / 9.0,
@@ -61,7 +61,7 @@ data class G2ContinuityProfile(
                 arcCurvatureScale = 1.0732051
             )
 
-        val Capsule: G2ContinuityProfile =
+        public val Capsule: G2ContinuityProfile =
             G2ContinuityProfile(
                 extendedFraction = 0.5286651 * 0.75,
                 arcFraction = 0.0,
@@ -69,7 +69,7 @@ data class G2ContinuityProfile(
                 arcCurvatureScale = 1.0
             )
 
-        val G1Equivalent: G2ContinuityProfile =
+        public val G1Equivalent: G2ContinuityProfile =
             G2ContinuityProfile(
                 extendedFraction = 0.0,
                 arcFraction = 1.0,
@@ -79,7 +79,7 @@ data class G2ContinuityProfile(
     }
 }
 
-fun lerp(start: G2ContinuityProfile, stop: G2ContinuityProfile, fraction: Double): G2ContinuityProfile {
+public fun lerp(start: G2ContinuityProfile, stop: G2ContinuityProfile, fraction: Double): G2ContinuityProfile {
     return G2ContinuityProfile(
         extendedFraction = lerp(start.extendedFraction, stop.extendedFraction, fraction),
         arcFraction = lerp(start.arcFraction, stop.arcFraction, fraction),

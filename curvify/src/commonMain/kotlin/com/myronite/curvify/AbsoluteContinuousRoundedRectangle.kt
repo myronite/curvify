@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
  * from the top-left in absolute coordinates instead of from the layout start.
  */
 @Immutable
-open class AbsoluteContinuousRoundedRectangle(
+public open class AbsoluteContinuousRoundedRectangle(
     topLeft: CornerSize,
     topRight: CornerSize,
     bottomRight: CornerSize,
@@ -61,7 +61,7 @@ open class AbsoluteContinuousRoundedRectangle(
         )
     }
 
-    fun copy(
+    public fun copy(
         topLeft: CornerSize = this.topStart,
         topRight: CornerSize = this.topEnd,
         bottomRight: CornerSize = this.bottomEnd,
@@ -84,11 +84,11 @@ open class AbsoluteContinuousRoundedRectangle(
 }
 
 @Stable
-val AbsoluteContinuousRectangle: AbsoluteContinuousRoundedRectangle = AbsoluteContinuousRectangleImpl()
+public val AbsoluteContinuousRectangle: AbsoluteContinuousRoundedRectangle = AbsoluteContinuousRectangleImpl()
 
 @Suppress("FunctionName")
 @Stable
-fun AbsoluteContinuousRectangle(continuity: Continuity = Continuity.Default): AbsoluteContinuousRoundedRectangle =
+public fun AbsoluteContinuousRectangle(continuity: Continuity = Continuity.Default): AbsoluteContinuousRoundedRectangle =
     AbsoluteContinuousRectangleImpl(continuity)
 
 @Immutable
@@ -108,11 +108,11 @@ private data class AbsoluteContinuousRectangleImpl(
 }
 
 @Stable
-val AbsoluteContinuousCapsule: AbsoluteContinuousRoundedRectangle = AbsoluteContinuousCapsule()
+public val AbsoluteContinuousCapsule: AbsoluteContinuousRoundedRectangle = AbsoluteContinuousCapsule()
 
 @Suppress("FunctionName")
 @Stable
-fun AbsoluteContinuousCapsule(continuity: Continuity = Continuity.Default): AbsoluteContinuousRoundedRectangle =
+public fun AbsoluteContinuousCapsule(continuity: Continuity = Continuity.Default): AbsoluteContinuousRoundedRectangle =
     AbsoluteContinuousCapsuleImpl(continuity)
 
 @Immutable
@@ -141,7 +141,7 @@ private data class AbsoluteContinuousCapsuleImpl(
 }
 
 @Stable
-fun AbsoluteContinuousRoundedRectangle(
+public fun AbsoluteContinuousRoundedRectangle(
     corner: CornerSize,
     continuity: Continuity = Continuity.Default
 ): AbsoluteContinuousRoundedRectangle =
@@ -154,7 +154,7 @@ fun AbsoluteContinuousRoundedRectangle(
     )
 
 @Stable
-fun AbsoluteContinuousRoundedRectangle(
+public fun AbsoluteContinuousRoundedRectangle(
     size: Dp,
     continuity: Continuity = Continuity.Default
 ): AbsoluteContinuousRoundedRectangle =
@@ -164,7 +164,7 @@ fun AbsoluteContinuousRoundedRectangle(
     )
 
 @Stable
-fun AbsoluteContinuousRoundedRectangle(
+public fun AbsoluteContinuousRoundedRectangle(
     @FloatRange(from = 0.0) size: Float,
     continuity: Continuity = Continuity.Default
 ): AbsoluteContinuousRoundedRectangle =
@@ -174,7 +174,7 @@ fun AbsoluteContinuousRoundedRectangle(
     )
 
 @Stable
-fun AbsoluteContinuousRoundedRectangle(
+public fun AbsoluteContinuousRoundedRectangle(
     @IntRange(from = 0, to = 100) percent: Int,
     continuity: Continuity = Continuity.Default
 ): AbsoluteContinuousRoundedRectangle =
@@ -184,7 +184,7 @@ fun AbsoluteContinuousRoundedRectangle(
     )
 
 @Stable
-fun AbsoluteContinuousRoundedRectangle(
+public fun AbsoluteContinuousRoundedRectangle(
     topLeft: Dp = 0f.dp,
     topRight: Dp = 0f.dp,
     bottomRight: Dp = 0f.dp,
@@ -200,7 +200,7 @@ fun AbsoluteContinuousRoundedRectangle(
     )
 
 @Stable
-fun AbsoluteContinuousRoundedRectangle(
+public fun AbsoluteContinuousRoundedRectangle(
     @FloatRange(from = 0.0) topLeft: Float = 0f,
     @FloatRange(from = 0.0) topRight: Float = 0f,
     @FloatRange(from = 0.0) bottomRight: Float = 0f,
@@ -216,7 +216,7 @@ fun AbsoluteContinuousRoundedRectangle(
     )
 
 @Stable
-fun AbsoluteContinuousRoundedRectangle(
+public fun AbsoluteContinuousRoundedRectangle(
     @IntRange(from = 0, to = 100) topLeftPercent: Int = 0,
     @IntRange(from = 0, to = 100) topRightPercent: Int = 0,
     @IntRange(from = 0, to = 100) bottomRightPercent: Int = 0,

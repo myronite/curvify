@@ -6,7 +6,7 @@ import com.myronite.curvify.path.PathSegments
 import com.myronite.curvify.path.buildPathSegments
 
 @Immutable
-data object G0Continuity : Continuity {
+public data object G0Continuity : Continuity {
 
     override fun createRoundedRectanglePathSegments(
         width: Double,

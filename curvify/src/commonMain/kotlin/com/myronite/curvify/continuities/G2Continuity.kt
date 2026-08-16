@@ -15,9 +15,9 @@ import kotlin.math.min
 import kotlin.math.sin
 
 @Immutable
-data class G2Continuity(
-    val profile: G2ContinuityProfile = G2ContinuityProfile.RoundedRectangle,
-    val capsuleProfile: G2ContinuityProfile = G2ContinuityProfile.Capsule
+public data class G2Continuity(
+    public val profile: G2ContinuityProfile = G2ContinuityProfile.RoundedRectangle,
+    public val capsuleProfile: G2ContinuityProfile = G2ContinuityProfile.Capsule
 ) : AdvancedContinuity() {
 
     private fun resolveBezier(profile: G2ContinuityProfile) = profile.bezier
