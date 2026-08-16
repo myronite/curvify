@@ -62,17 +62,17 @@ kotlin {
             implementation(libs.lifecycle.runtime.compose)
             implementation(libs.material.icons.core)
 
-            implementation(project(":capsule"))
+            implementation(project(":curvify"))
         }
     }
 }
 
 android {
-    namespace = "dev.mingyubmy.capsule"
+    namespace = "com.myronite.curvify"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "dev.mingyubmy.capsule"
+        applicationId = "com.myronite.curvify"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

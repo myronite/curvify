@@ -1,4 +1,4 @@
-rootProject.name = "capsule-compose-multiplatform"
+rootProject.name = "compose-curvify"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -45,4 +45,4 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
-include(":capsule")
+include(":curvify")

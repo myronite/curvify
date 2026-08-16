@@ -1,19 +1,19 @@
-# Capsule for Compose Multiplatform
+# Curvify
 
-![Maven Central](https://img.shields.io/maven-central/v/dev.mingyubmy/capsule-compose-multiplatform)
+![Maven Central](https://img.shields.io/maven-central/v/io.github.myronite/curvify)
 
 Based on the original project: [Capsule](https://github.com/Kyant0/Capsule)
 
 Original author: [Kyant0](https://github.com/kyant0)
 
-Capsule for Compose Multiplatform is a Compose Multiplatform library that creates G2 continuous rounded rectangles.
+Curvify is a Compose Multiplatform library that creates G2 continuous rounded rectangles.
 
 ## Installation
 
 In build.gradle.kts, add
 
 ```kotlin
-implementation("dev.mingyubmy:capsule-compose-multiplatform:<version>")
+implementation("io.github.myronite:curvify:<version>")
 ```
 
 ## Usages
@@ -64,7 +64,7 @@ it will have exact G2 continuity.
 
 ### Performance
 
-Drawing cubic Bézier curves on Android performs poorly. However, the Capsule library uses a very efficient method to
+Drawing cubic Bézier curves on Android performs poorly. However, the Curvify library uses a very efficient method to
 calculate the control points, achieving optimal theoretical performance.
 
 When the shape area is large (almost fullscreen) and the corner radius is constantly changing, performance may decrease.
