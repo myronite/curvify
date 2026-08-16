@@ -5,6 +5,7 @@ import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.compose.ui.util.fastCoerceIn
 import com.myronite.curvify.AdvancedContinuity
 import com.myronite.curvify.Continuity
+import com.myronite.curvify.core.CubicBezier
 import com.myronite.curvify.core.Point
 import com.myronite.curvify.path.PathSegments
 import com.myronite.curvify.path.PathSegmentsBuilder
@@ -20,7 +21,10 @@ public data class G2Continuity(
     public val capsuleProfile: G2ContinuityProfile = G2ContinuityProfile.Capsule
 ) : AdvancedContinuity() {
 
-    private fun resolveBezier(profile: G2ContinuityProfile) = profile.bezier
+    private fun resolveBezier(
+        profile: G2ContinuityProfile,
+        cache: MutableMap<G2ContinuityProfile, CubicBezier>
+    ): CubicBezier = cache.getOrPut(profile) { profile.bezier }
 
     override fun createStandardRoundedRectanglePathSegments(
         width: Double,
@@ -115,14 +119,16 @@ public data class G2Continuity(
         val arcKScaleBL = 1.0 + (profile.arcCurvatureScale - 1.0) * ratioBL
 
         // base Beziers of each half corner
-        val bezierTLV = resolveBezier(G2ContinuityProfile(extFracTLV, arcFracTL, bezKScaleTLV, arcKScaleTL))
-        val bezierTLH = resolveBezier(G2ContinuityProfile(extFracTLH, arcFracTL, bezKScaleTLH, arcKScaleTL))
-        val bezierTRH = resolveBezier(G2ContinuityProfile(extFracTRH, arcFracTR, bezKScaleTRH, arcKScaleTR))
-        val bezierTRV = resolveBezier(G2ContinuityProfile(extFracTRV, arcFracTR, bezKScaleTRV, arcKScaleTR))
-        val bezierBRV = resolveBezier(G2ContinuityProfile(extFracBRV, arcFracBR, bezKScaleBRV, arcKScaleBR))
-        val bezierBRH = resolveBezier(G2ContinuityProfile(extFracBRH, arcFracBR, bezKScaleBRH, arcKScaleBR))
-        val bezierBLH = resolveBezier(G2ContinuityProfile(extFracBLH, arcFracBL, bezKScaleBLH, arcKScaleBL))
-        val bezierBLV = resolveBezier(G2ContinuityProfile(extFracBLV, arcFracBL, bezKScaleBLV, arcKScaleBL))
+        // Profiles are deduplicated by value, so symmetric corners share a single Bezier evaluation.
+        val bezierCache = HashMap<G2ContinuityProfile, CubicBezier>()
+        val bezierTLV = resolveBezier(G2ContinuityProfile(extFracTLV, arcFracTL, bezKScaleTLV, arcKScaleTL), bezierCache)
+        val bezierTLH = resolveBezier(G2ContinuityProfile(extFracTLH, arcFracTL, bezKScaleTLH, arcKScaleTL), bezierCache)
+        val bezierTRH = resolveBezier(G2ContinuityProfile(extFracTRH, arcFracTR, bezKScaleTRH, arcKScaleTR), bezierCache)
+        val bezierTRV = resolveBezier(G2ContinuityProfile(extFracTRV, arcFracTR, bezKScaleTRV, arcKScaleTR), bezierCache)
+        val bezierBRV = resolveBezier(G2ContinuityProfile(extFracBRV, arcFracBR, bezKScaleBRV, arcKScaleBR), bezierCache)
+        val bezierBRH = resolveBezier(G2ContinuityProfile(extFracBRH, arcFracBR, bezKScaleBRH, arcKScaleBR), bezierCache)
+        val bezierBLH = resolveBezier(G2ContinuityProfile(extFracBLH, arcFracBL, bezKScaleBLH, arcKScaleBL), bezierCache)
+        val bezierBLV = resolveBezier(G2ContinuityProfile(extFracBLV, arcFracBL, bezKScaleBLV, arcKScaleBL), bezierCache)
 
         return buildPathSegments {
             var x = 0.0
@@ -289,14 +295,12 @@ public data class G2Continuity(
             com.myronite.curvify.lerp(capsuleProfile.bezierCurvatureScale, profile.bezierCurvatureScale, ratioH)
         val arcFrac = capsuleProfile.arcFraction
         val bezierH =
-            resolveBezier(
-                G2ContinuityProfile(
-                    extendedFraction = extFracH,
-                    arcFraction = arcFrac,
-                    bezierCurvatureScale = bezKScaleH,
-                    arcCurvatureScale = 1.0
-                )
-            ) * radius
+            G2ContinuityProfile(
+                extendedFraction = extFracH,
+                arcFraction = arcFrac,
+                bezierCurvatureScale = bezKScaleH,
+                arcCurvatureScale = 1.0
+            ).bezier * radius
 
         val arcRad = PI * 0.5 * arcFrac
         val bezRad = (PI * 0.5 - arcRad) * 0.5
@@ -387,14 +391,12 @@ public data class G2Continuity(
             com.myronite.curvify.lerp(capsuleProfile.bezierCurvatureScale, profile.bezierCurvatureScale, ratioV)
         val arcFrac = capsuleProfile.arcFraction
         val bezierV =
-            resolveBezier(
-                G2ContinuityProfile(
-                    extendedFraction = extFracV,
-                    arcFraction = arcFrac,
-                    bezierCurvatureScale = bezKScaleV,
-                    arcCurvatureScale = 1.0
-                )
-            ) * radius
+            G2ContinuityProfile(
+                extendedFraction = extFracV,
+                arcFraction = arcFrac,
+                bezierCurvatureScale = bezKScaleV,
+                arcCurvatureScale = 1.0
+            ).bezier * radius
 
         val arcRad = PI * 0.5 * arcFrac
         val bezRad = (PI * 0.5 - arcRad) * 0.5

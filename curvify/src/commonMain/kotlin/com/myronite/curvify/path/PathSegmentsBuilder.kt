@@ -57,6 +57,9 @@ public class PathSegmentsBuilder {
     }
 
     public fun build(): PathSegments {
-        return segments.toList()
+        // Swap the backing list so the returned one is never mutated by later builder calls.
+        val result = segments
+        segments = mutableListOf()
+        return result
     }
 }

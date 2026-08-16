@@ -16,9 +16,8 @@ public fun PathSegments.toPath(): Path {
 }
 
 public fun PathSegments.toSvg(asDocument: Boolean = false): String = buildString {
-    val bounds = this@toSvg.toPath().getBounds()
-
     if (asDocument) {
+        val bounds = this@toSvg.toPath().getBounds()
         append("""<svg xmlns="http://www.w3.org/2000/svg" """)
         appendLine("""viewBox="${bounds.left} ${bounds.top} ${bounds.width} ${bounds.height}">""")
     }
