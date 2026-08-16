@@ -64,17 +64,17 @@ public open class AbsoluteContinuousRoundedRectangle(
     /** Returns a copy of this shape with the given properties replaced.
      *  Defaults are inherited from [ContinuousRoundedRectangle.copy]. */
     override fun copy(
-        topLeft: CornerSize,
-        topRight: CornerSize,
-        bottomRight: CornerSize,
-        bottomLeft: CornerSize,
+        topStart: CornerSize,
+        topEnd: CornerSize,
+        bottomEnd: CornerSize,
+        bottomStart: CornerSize,
         continuity: Continuity
     ): AbsoluteContinuousRoundedRectangle {
         return AbsoluteContinuousRoundedRectangle(
-            topLeft = topLeft,
-            topRight = topRight,
-            bottomRight = bottomRight,
-            bottomLeft = bottomLeft,
+            topLeft = topStart,
+            topRight = topEnd,
+            bottomRight = bottomEnd,
+            bottomLeft = bottomStart,
             continuity = continuity
         )
     }
