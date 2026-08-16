@@ -91,7 +91,7 @@ public open class ContinuousRoundedRectangle(
     }
 
     /** Returns a copy of this shape with the given properties replaced. */
-    public fun copy(
+    public open fun copy(
         topStart: CornerSize = this.topStart,
         topEnd: CornerSize = this.topEnd,
         bottomEnd: CornerSize = this.bottomEnd,
@@ -111,7 +111,7 @@ public open class ContinuousRoundedRectangle(
         if (this === other) return true
         if (other !is ContinuousRoundedRectangle) return false
         // Directional and absolute variants render differently under RTL, keep them unequal.
-        if (other is AbsoluteContinuousRoundedRectangle && this !is AbsoluteContinuousRoundedRectangle) return false
+        if ((other is AbsoluteContinuousRoundedRectangle) != (this is AbsoluteContinuousRoundedRectangle)) return false
 
         if (topStart != other.topStart) return false
         if (topEnd != other.topEnd) return false
