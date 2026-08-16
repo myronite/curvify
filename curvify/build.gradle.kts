@@ -17,6 +17,8 @@ group = "io.github.myronite"
 version = "0.0.2"
 
 kotlin {
+    explicitApi()
+
     jvm()
     androidLibrary {
         namespace = "com.myronite.curvify"

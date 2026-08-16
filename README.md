@@ -28,10 +28,54 @@ ContinuousRoundedRectangle(16.dp)
 ContinuousCapsule
 ```
 
+### Directional vs absolute corners
+
+`ContinuousRoundedRectangle` resolves `topStart`/`topEnd` according to the layout direction (mirrored in RTL).
+If you always want corners relative to the top-left, use the absolute variants:
+
+```kotlin
+// corners stay fixed regardless of layout direction
+AbsoluteContinuousRoundedRectangle(topLeft = 16.dp, bottomRight = 16.dp)
+AbsoluteContinuousCapsule
+```
+
+### Concentric shapes
+
+Grow or shrink a shape while keeping the corner curves concentric, similar to the iOS squircle insets:
+
+```kotlin
+val outer = ContinuousRoundedRectangle(24.dp)
+val inner = outer.concentricInset(8.dp)   // smaller, concentric corners
+val bigger = outer.concentricOutset(4.dp) // larger, concentric corners
+```
+
+Also available on the `AbsoluteContinuousRoundedRectangle` family.
+
+### Shape interpolation
+
+Interpolate between two shapes (corners and continuity both animate):
+
+```kotlin
+val shape = lerp(startShape, stopShape, fraction)
+```
+
+### Export as SVG
+
+Every shape geometry is built from pure `PathSegments`, which can be exported:
+
+```kotlin
+val segments = G2Continuity().createRoundedRectanglePathSegments(
+    width = 200.0, height = 100.0,
+    topLeft = 16.0, topRight = 16.0, bottomRight = 16.0, bottomLeft = 16.0
+)
+val svg = segments.toSvg(asDocument = true)
+```
+
 Custom continuity:
 
 ```kotlin
-val g1 = G1Continuity // no corner smoothness
+val g0 = G0Continuity // sharp corners
+val g1 = G1Continuity // plain rounded corners, no corner smoothing
 val g2 = G2Continuity(
     profile = G2ContinuityProfile.RoundedRectangle.copy(
         extendedFraction = 0.5,
